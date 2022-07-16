@@ -21,9 +21,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     //Declare Recyclerview , Adapter and ArrayList
     private RecyclerView recyclerView;
     ArrayList<Detail> detailArrayList;
-    Button btnAdd,btnDone;
-     TextInputLayout nameEt,taskEt;
-     Boolean check= false;
+    Button btnAdd, btnDone;
+    TextInputLayout nameEt, taskEt;
+    Boolean check = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.add:
                 showCustomDialog();
                 break;
@@ -51,62 +51,50 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCancelable(true);
         dialog.setContentView(R.layout.add_todo_dialog);
-         nameEt = dialog.findViewById(R.id.name);
-         taskEt = dialog.findViewById(R.id.task);
+        nameEt = dialog.findViewById(R.id.name);
+        taskEt = dialog.findViewById(R.id.task);
 
         btnDone = dialog.findViewById(R.id.btn_done);
         btnDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String name = nameEt.getEditText().getText().toString();
-                String task = taskEt.getEditText().getText().toString();
-                validateData(name,task);
-                if (check.equals(true)){
-                    dialog.dismiss();
-                }
-
+                validateData();
+                dialog.dismiss();
             }
         });
         dialog.show();
     }
+
     private void initView1() {
         // Initialize RecyclerView and set Adapter
         recyclerView = findViewById(R.id.todo_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        detailArrayList= new ArrayList<>();
-        DetailAdapter scoutAdapter=new DetailAdapter(this,detailArrayList);
+        detailArrayList = new ArrayList<>();
+        DetailAdapter scoutAdapter = new DetailAdapter(this, detailArrayList);
         recyclerView.setAdapter(scoutAdapter);
         createList1();
     }
+
     private void createList1() {
         //data to be shown in list
 
-        detailArrayList.add(new Detail( "Eren Jaeger" ,"ioi"));
-        detailArrayList.add(new Detail( "Eren Jaeger" ,"ioi"));
-        detailArrayList.add(new Detail( "Eren Jaeger" ,"ioi"));
-        detailArrayList.add(new Detail( "Eren Jaeger" ,"ioi"));
+        detailArrayList.add(new Detail("Eren Jaeger", "ioi"));
+        detailArrayList.add(new Detail("Eren Jaeger", "ioi"));
+        detailArrayList.add(new Detail("Eren Jaeger", "ioi"));
+        detailArrayList.add(new Detail("Eren Jaeger", "ioi"));
 
     }
-public boolean validateData(String name,String task){
-        if (name.isEmpty()){
-            nameEt.setError("valid name");
-            nameEt.requestFocus();
-        }
-        if (task.isEmpty()){
-            taskEt.setError("valid name");
-            taskEt.requestFocus();
-        }
-        else{
-            detailArrayList.add(new Detail( name ,task));
+
+    public void validateData() {
+        String name = nameEt.getEditText().getText().toString();
+        String task = taskEt.getEditText().getText().toString();
+
+        if (name.length() >= 1 && task.length() >= 1) {
+            detailArrayList.add(new Detail(name, task));
             Toast.makeText(this, "Successfully Added", Toast.LENGTH_SHORT).show();
-            return true;
+        } else {
+            Toast.makeText(this, "Enter Valid Inputs", Toast.LENGTH_SHORT).show();
         }
 
-}
-
-
-    void showError(int id, String errorMessage) {
-        ((TextInputLayout) findViewById(id)).setErrorEnabled(true);
-        ((TextInputLayout) findViewById(id)).setError(errorMessage);
     }
 }

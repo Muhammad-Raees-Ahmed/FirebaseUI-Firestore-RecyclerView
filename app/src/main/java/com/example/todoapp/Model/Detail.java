@@ -1,11 +1,12 @@
 package com.example.todoapp.Model;
 
 public class Detail {
-    String name;
+    String name,task;
 
 
-    public Detail(String name) {
+    public Detail(String name, String task) {
         this.name = name;
+        this.task = task;
     }
 
     public String getName() {
@@ -14,5 +15,13 @@ public class Detail {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getTask() {
+        return task;
+    }
+
+    public void setTask(String task) {
+        this.task = task;
     }
 }

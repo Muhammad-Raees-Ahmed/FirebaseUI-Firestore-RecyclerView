@@ -17,10 +17,12 @@ import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     //Declare Recyclerview , Adapter and ArrayList
     private RecyclerView recyclerView;
     ArrayList<Detail> detailArrayList;
+    Button btnAdd;
+
 
 
     @Override
@@ -29,13 +31,18 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         initView1();
 
-        Button btn=findViewById(R.id.add);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-showCustomDialog();
-            }
-        });
+        btnAdd = findViewById(R.id.add);
+        btnAdd.setOnClickListener(this);
+
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.add:
+                showCustomDialog();
+                break;
+        }
     }
 
     //Function to display the custom dialog.
@@ -78,17 +85,14 @@ showCustomDialog();
         recyclerView.setAdapter(scoutAdapter);
         createList1();
     }
-
-
     private void createList1() {
         //data to be shown in list
 
-
         detailArrayList.add(new Detail( "Eren Jaeger" ));
         detailArrayList.add(new Detail( "Eren Jaeger" ));
         detailArrayList.add(new Detail( "Eren Jaeger" ));
         detailArrayList.add(new Detail( "Eren Jaeger" ));
-
-
     }
+
+
 }

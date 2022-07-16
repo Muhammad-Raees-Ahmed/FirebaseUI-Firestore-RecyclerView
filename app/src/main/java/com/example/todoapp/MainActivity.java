@@ -9,11 +9,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.EditText;
 
 import com.example.todoapp.Adapter.DetailAdapter;
-import com.example.todoapp.Adapter.ScoutAdapter;
 import com.example.todoapp.Model.Detail;
 import com.example.todoapp.Model.Scout;
 import com.google.android.material.textfield.TextInputLayout;
@@ -23,9 +20,6 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
     //Declare Recyclerview , Adapter and ArrayList
     private RecyclerView recyclerView;
-    private ScoutAdapter adapter;
-    private ArrayList<Scout> scoutArrayList;
-
     ArrayList<Detail> detailArrayList;
 
 

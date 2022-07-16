@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.example.todoapp.Adapter.DetailAdapter;
 import com.example.todoapp.Model.Detail;
+import com.example.todoapp.Model.FirebaseModel;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
@@ -24,12 +25,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Button btnAdd, btnDone;
     TextInputLayout nameEt, taskEt;
     Boolean check = false;
+    FirebaseModel firebaseModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        initView1();
+//        initView1();
 
         btnAdd = findViewById(R.id.add);
         btnAdd.setOnClickListener(this);
@@ -58,7 +60,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                validateData();
+//                validateData();
+                firebaseModel.addTest("hi","dad");
                 dialog.dismiss();
             }
         });
@@ -72,29 +75,31 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         detailArrayList = new ArrayList<>();
         DetailAdapter scoutAdapter = new DetailAdapter(this, detailArrayList);
         recyclerView.setAdapter(scoutAdapter);
-        createList1();
+//        createList1();
     }
 
-    private void createList1() {
-        //data to be shown in list
+//    private void createList1() {
+//        //data to be shown in list
+//
+//        detailArrayList.add(new Detail("Eren Jaeger", "ioi"));
+//        detailArrayList.add(new Detail("Eren Jaeger", "ioi"));
+//        detailArrayList.add(new Detail("Eren Jaeger", "ioi"));
+//        detailArrayList.add(new Detail("Eren Jaeger", "ioi"));
+//
+//    }
 
-        detailArrayList.add(new Detail("Eren Jaeger", "ioi"));
-        detailArrayList.add(new Detail("Eren Jaeger", "ioi"));
-        detailArrayList.add(new Detail("Eren Jaeger", "ioi"));
-        detailArrayList.add(new Detail("Eren Jaeger", "ioi"));
-
-    }
-
-    public void validateData() {
-        String name = nameEt.getEditText().getText().toString();
-        String task = taskEt.getEditText().getText().toString();
-
-        if (name.length() >= 1 && task.length() >= 1) {
-            detailArrayList.add(new Detail(name, task));
-            Toast.makeText(this, "Successfully Added", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(this, "Enter Valid Inputs", Toast.LENGTH_SHORT).show();
-        }
-
-    }
+//    public void validateData() {
+//        String name = nameEt.getEditText().getText().toString();
+//        String task = taskEt.getEditText().getText().toString();
+//
+//        if (name.length() >= 1 && task.length() >= 1) {
+////            firebaseModel.addTask(name,task);
+//            firebaseModel.addTest("hi","dad");
+////            detailArrayList.add(new Detail(name, task));
+//            Toast.makeText(this, "Successfully Added", Toast.LENGTH_SHORT).show();
+//        } else {
+//            Toast.makeText(this, "Enter Valid Inputs", Toast.LENGTH_SHORT).show();
+//        }
+//
+//    }
 }

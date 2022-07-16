@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.todoapp.Adapter.DetailAdapter;
 import com.example.todoapp.Model.Detail;
@@ -22,6 +23,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     ArrayList<Detail> detailArrayList;
     Button btnAdd,btnDone;
      TextInputLayout nameEt,taskEt;
+     Boolean check= false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +60,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void onClick(View v) {
                 String name = nameEt.getEditText().getText().toString();
                 String task = taskEt.getEditText().getText().toString();
-                dialog.dismiss();
+                validateData(name,task);
+                if (check.equals(true)){
+                    dialog.dismiss();
+                }
+
             }
         });
         dialog.show();
@@ -81,6 +87,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         detailArrayList.add(new Detail( "Eren Jaeger" ,"ioi"));
 
     }
+public boolean validateData(String name,String task){
+        if (name.isEmpty()){
+            nameEt.setError("valid name");
+            nameEt.requestFocus();
+        }
+        if (task.isEmpty()){
+            taskEt.setError("valid name");
+            taskEt.requestFocus();
+        }
+        else{
+            detailArrayList.add(new Detail( name ,task));
+            Toast.makeText(this, "Successfully Added", Toast.LENGTH_SHORT).show();
+            return true;
+        }
+
+}
 
 
+    void showError(int id, String errorMessage) {
+        ((TextInputLayout) findViewById(id)).setErrorEnabled(true);
+        ((TextInputLayout) findViewById(id)).setError(errorMessage);
+    }
 }

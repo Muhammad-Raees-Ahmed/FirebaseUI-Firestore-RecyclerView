@@ -15,6 +15,7 @@ import com.example.todoapp.Adapter.DetailAdapter;
 import com.example.todoapp.Model.Detail;
 import com.example.todoapp.Model.FirebaseModel;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 
@@ -26,15 +27,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     TextInputLayout nameEt, taskEt;
     Boolean check = false;
     FirebaseModel firebaseModel;
+    private FirebaseFirestore db;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 //        initView1();
-
+        db = FirebaseFirestore.getInstance();
         btnAdd = findViewById(R.id.add);
         btnAdd.setOnClickListener(this);
+
 
     }
 
@@ -42,7 +48,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.add:
+
+//         firebaseModel.addTest(MainActivity.this,"hi","dad");
+//                DocumentReference doc=FirebaseFirestore.getInstance().collection(COLLECTION_USER).document();
+//                doc.set(new test("a","b"))
+//                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+//                            @Override
+//                            public void onSuccess(Void unused) {
+//                                Log.d("Inserted","pass");
+//                            }
+//                        })
+//                        .addOnFailureListener(new OnFailureListener() {
+//                            @Override
+//                            public void onFailure(@NonNull Exception e) {
+//                                Log.d("Inserted","pass");
+//                            }
+//                        });
                 showCustomDialog();
+//                datafirebase();
                 break;
         }
     }
@@ -60,8 +83,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                validateData();
-                firebaseModel.addTest("hi","dad");
+
+                validateData();
                 dialog.dismiss();
             }
         });
@@ -88,18 +111,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //
 //    }
 
-//    public void validateData() {
-//        String name = nameEt.getEditText().getText().toString();
-//        String task = taskEt.getEditText().getText().toString();
-//
-//        if (name.length() >= 1 && task.length() >= 1) {
-////            firebaseModel.addTask(name,task);
-//            firebaseModel.addTest("hi","dad");
-////            detailArrayList.add(new Detail(name, task));
-//            Toast.makeText(this, "Successfully Added", Toast.LENGTH_SHORT).show();
-//        } else {
-//            Toast.makeText(this, "Enter Valid Inputs", Toast.LENGTH_SHORT).show();
-//        }
-//
-//    }
+    public void validateData() {
+        String name = nameEt.getEditText().getText().toString();
+        String task = taskEt.getEditText().getText().toString();
+
+        if (name.length() >= 1 && task.length() >= 1) {
+            firebaseModel=new FirebaseModel();
+            firebaseModel.addTask(this,name,task);
+//            detailArrayList.add(new Detail(name, task));
+            Toast.makeText(this, "Successfully Added", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "Enter Valid Inputs", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+
 }

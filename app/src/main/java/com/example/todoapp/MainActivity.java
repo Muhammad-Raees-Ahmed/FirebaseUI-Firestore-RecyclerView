@@ -40,32 +40,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         db = FirebaseFirestore.getInstance();
         btnAdd = findViewById(R.id.add);
         btnAdd.setOnClickListener(this);
-
-
     }
-
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.add:
-
-//         firebaseModel.addTest(MainActivity.this,"hi","dad");
-//                DocumentReference doc=FirebaseFirestore.getInstance().collection(COLLECTION_USER).document();
-//                doc.set(new test("a","b"))
-//                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-//                            @Override
-//                            public void onSuccess(Void unused) {
-//                                Log.d("Inserted","pass");
-//                            }
-//                        })
-//                        .addOnFailureListener(new OnFailureListener() {
-//                            @Override
-//                            public void onFailure(@NonNull Exception e) {
-//                                Log.d("Inserted","pass");
-//                            }
-//                        });
                 showCustomDialog();
-//                datafirebase();
                 break;
         }
     }
@@ -83,7 +63,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 validateData();
                 dialog.dismiss();
             }

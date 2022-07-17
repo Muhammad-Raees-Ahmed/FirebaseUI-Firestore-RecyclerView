@@ -19,7 +19,6 @@ public class FirebaseModel {
     private static FirebaseModel single_instance = null;
     private final FirebaseFirestore db;
 
-
     public FirebaseModel() {
         db = FirebaseFirestore.getInstance();
     }
@@ -29,7 +28,6 @@ public class FirebaseModel {
             single_instance = new FirebaseModel();
         return single_instance;
     }
-
 
     public void addTask(MainActivity mainActivity, String name, String task) {
         DocumentReference doc = FirebaseFirestore.getInstance().collection(COLLECTION_USER).document();

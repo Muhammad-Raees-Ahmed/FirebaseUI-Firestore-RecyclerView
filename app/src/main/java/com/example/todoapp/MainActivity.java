@@ -49,7 +49,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
         }
     }
-
     //Function to display the custom dialog.
     void showCustomDialog() {
         final Dialog dialog = new Dialog(MainActivity.this);
@@ -102,8 +101,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         } else {
             Toast.makeText(this, "Enter Valid Inputs", Toast.LENGTH_SHORT).show();
         }
-
     }
-
-
 }

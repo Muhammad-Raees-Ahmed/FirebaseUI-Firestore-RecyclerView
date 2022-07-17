@@ -30,17 +30,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private FirebaseFirestore db;
 
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 //        initView1();
-        db = FirebaseFirestore.getInstance();
+
         btnAdd = findViewById(R.id.add);
         btnAdd.setOnClickListener(this);
+        firebaseModel = FirebaseModel.getInstance();
     }
+
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -95,8 +95,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         String task = taskEt.getEditText().getText().toString();
 
         if (name.length() >= 1 && task.length() >= 1) {
-            firebaseModel=new FirebaseModel();
-            firebaseModel.addTask(this,name,task);
+
+            firebaseModel.addTask(this, name, task);
 //            detailArrayList.add(new Detail(name, task));
             Toast.makeText(this, "Successfully Added", Toast.LENGTH_SHORT).show();
         } else {

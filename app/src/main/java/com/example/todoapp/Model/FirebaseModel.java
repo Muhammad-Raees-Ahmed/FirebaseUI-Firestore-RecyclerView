@@ -81,29 +81,7 @@ public class FirebaseModel {
                     }
                 });
     }
-    public void getDocumentId_WSL(MainActivity mainActivity) {
-        final DocumentReference docRef = (DocumentReference) db.collection("cities")
-                .addSnapshotListener(new EventListener<DocumentSnapshot>() {
-            @Override
-            public void onEvent(@Nullable DocumentSnapshot snapshot,
-                                @Nullable FirebaseFirestoreException e) {
-                if (e != null) {
-                    Log.w(TAG, "Listen failed.", e);
-                    return;
-                }
 
-                if (snapshot != null && snapshot.exists()) {
-                    Log.d(TAG, "Current data: " + snapshot.getData());
-                } else {
-                    Log.d(TAG, "Current data: null");
-                }
-            }
-        });
-
-
-
-        //
-    }
 
 
 

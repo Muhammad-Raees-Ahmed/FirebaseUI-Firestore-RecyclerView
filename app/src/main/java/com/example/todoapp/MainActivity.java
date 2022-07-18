@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnAdd = findViewById(R.id.add);
         btnAdd.setOnClickListener(this);
         firebaseModel = FirebaseModel.getInstance();
+        firebaseModel.getTask(this);
     }
 
     @Override
@@ -64,6 +65,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void onClick(View v) {
                 validateData();
                 dialog.dismiss();
+
+
             }
         });
         dialog.show();

@@ -1,5 +1,6 @@
 package com.example.todoapp.Model;
 
+import static android.content.ContentValues.TAG;
 import static com.example.todoapp.Model.immutable.COLLECTION_USER;
 
 import android.util.Log;
@@ -13,6 +14,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -24,6 +26,8 @@ import java.util.List;
 public class FirebaseModel {
     private static FirebaseModel single_instance = null;
     private final FirebaseFirestore db;
+
+
 
     public FirebaseModel() {
         db = FirebaseFirestore.getInstance();
@@ -48,7 +52,7 @@ public class FirebaseModel {
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Log.d("Inserted", "pass");
+                        Log.d("Inserted", "fail");
                     }
                 });
     }
@@ -65,7 +69,7 @@ public class FirebaseModel {
                                 list.add(document.getId());
                             }
                             Log.d("result", list.toString());
-                            System.out.println(list.toString());
+                            System.out.println(list);
                             //
                             Toast.makeText(mainActivity, list.toString(), Toast.LENGTH_LONG).show();
                         } else{
@@ -73,6 +77,30 @@ public class FirebaseModel {
                         }
                     }
                 });
+    }
+
+    // get document data  from collection "user"   without snapshot listeners
+    public void getTask1(MainActivity mainActivity) {
+        DocumentReference docRef = db.collection("users").document("DyNondqBf8avce0lM70P");
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        Log.d(TAG, "DocumentSnapshot data: " + document.getData());
+                        Toast.makeText(mainActivity, document.getData().toString(), Toast.LENGTH_SHORT).show();
+                    } else {
+                        Log.d(TAG, "No such document");
+                        Toast.makeText(mainActivity, "no ducument", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Log.d(TAG, "get failed with ", task.getException());
+                    Toast.makeText(mainActivity, "get failed", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
     }
 }
 

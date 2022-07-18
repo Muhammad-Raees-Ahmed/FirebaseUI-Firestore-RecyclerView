@@ -19,6 +19,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -60,7 +61,7 @@ public class FirebaseModel {
                 });
     }
 
-    // get document id from collection "user" by snapshot listeners
+    // get document id from collection "user" without snapshot listeners
     public void getDocumentId_SL(MainActivity mainActivity) {
         Task<QuerySnapshot> doc = FirebaseFirestore.getInstance().collection(COLLECTION_USER)
                 .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -82,11 +83,8 @@ public class FirebaseModel {
                 });
     }
 
-
-
-
-    // get document data  from collection "user"   without snapshot listeners
-    public void getTask1(MainActivity mainActivity) {
+    // get document data  from collection "user"
+    public void getSpecificDocumentData(MainActivity mainActivity) {
         DocumentReference docRef = db.collection("users").document("DyNondqBf8avce0lM70P");
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override

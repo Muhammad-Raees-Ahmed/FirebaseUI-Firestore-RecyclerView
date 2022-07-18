@@ -7,6 +7,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.example.todoapp.MainActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -15,7 +16,9 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -58,7 +61,7 @@ public class FirebaseModel {
     }
 
     // get document id from collection "user" by snapshot listeners
-    public void getTask(MainActivity mainActivity) {
+    public void getDocumentId_SL(MainActivity mainActivity) {
         Task<QuerySnapshot> doc = FirebaseFirestore.getInstance().collection(COLLECTION_USER)
                 .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -78,6 +81,31 @@ public class FirebaseModel {
                     }
                 });
     }
+    public void getDocumentId_WSL(MainActivity mainActivity) {
+        final DocumentReference docRef = (DocumentReference) db.collection("cities")
+                .addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot snapshot,
+                                @Nullable FirebaseFirestoreException e) {
+                if (e != null) {
+                    Log.w(TAG, "Listen failed.", e);
+                    return;
+                }
+
+                if (snapshot != null && snapshot.exists()) {
+                    Log.d(TAG, "Current data: " + snapshot.getData());
+                } else {
+                    Log.d(TAG, "Current data: null");
+                }
+            }
+        });
+
+
+
+        //
+    }
+
+
 
     // get document data  from collection "user"   without snapshot listeners
     public void getTask1(MainActivity mainActivity) {
@@ -102,5 +130,8 @@ public class FirebaseModel {
         });
 
     }
+
+
+
 }
 

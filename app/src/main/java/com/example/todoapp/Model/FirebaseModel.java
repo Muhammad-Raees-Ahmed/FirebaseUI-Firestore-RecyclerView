@@ -53,7 +53,7 @@ public class FirebaseModel {
                 });
     }
 
-    // retrieve task //
+    // get document id from collection "user" by snapshot listeners
     public void getTask(MainActivity mainActivity) {
         Task<QuerySnapshot> doc = FirebaseFirestore.getInstance().collection(COLLECTION_USER)
                 .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {

@@ -28,7 +28,7 @@ public class FirebaseModel {
             single_instance = new FirebaseModel();
         return single_instance;
     }
-
+// add task method
     public void addTask(MainActivity mainActivity, String name, String task) {
         DocumentReference doc = FirebaseFirestore.getInstance().collection(COLLECTION_USER).document();
         doc.set(new Detail(doc.getId(),name,task,new Date().getTime()))

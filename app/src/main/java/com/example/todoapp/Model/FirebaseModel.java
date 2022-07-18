@@ -66,6 +66,7 @@ public class FirebaseModel {
                             }
                             Log.d("result", list.toString());
                             System.out.println(list.toString());
+                            //
                             Toast.makeText(mainActivity, list.toString(), Toast.LENGTH_LONG).show();
                         } else{
                             Log.d("error","no result");

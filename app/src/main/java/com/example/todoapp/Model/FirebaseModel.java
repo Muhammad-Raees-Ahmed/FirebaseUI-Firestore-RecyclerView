@@ -89,6 +89,7 @@ public class FirebaseModel {
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                // if block
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
@@ -98,6 +99,7 @@ public class FirebaseModel {
                         Log.d(TAG, "No such document");
                         Toast.makeText(mainActivity, "no ducument", Toast.LENGTH_SHORT).show();
                     }
+                    // else block
                 } else {
                     Log.d(TAG, "get failed with ", task.getException());
                     Toast.makeText(mainActivity, "get failed", Toast.LENGTH_SHORT).show();

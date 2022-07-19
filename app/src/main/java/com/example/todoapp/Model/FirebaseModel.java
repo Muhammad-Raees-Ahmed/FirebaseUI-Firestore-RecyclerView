@@ -63,6 +63,8 @@ public class FirebaseModel {
 
     // get document id from collection "user" without snapshot listeners
     public void getDocumentId_SL(MainActivity mainActivity) {
+
+        // QuerySnapshot used for read multiple document from collection
         Task<QuerySnapshot> doc = FirebaseFirestore.getInstance().collection(COLLECTION_USER)
                 .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -89,7 +91,7 @@ public class FirebaseModel {
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                // if block
+                // DocumentSnapshot used for read single document
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {

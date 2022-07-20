@@ -111,7 +111,7 @@ public class FirebaseModel {
 
     }
 
-    public void getTaskData(MainActivity mainActivity){
+    public  void getTaskData(MainActivity mainActivity,List<Detail> detailList){
        db.collection(COLLECTION_USER)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
@@ -127,11 +127,16 @@ public class FirebaseModel {
                     if (doc.get("name") != null) {
                         cities.add(doc.getString("name"));
                         Toast.makeText(mainActivity, cities.toString(), Toast.LENGTH_SHORT).show();
+                        detailList.add(doc.toObject(Detail.class));
+                        Toast.makeText(mainActivity, detailList.toString(), Toast.LENGTH_SHORT).show();
+
                     }
                 }
                 Log.d(TAG, "Current cites in CA: " + cities);
             }
         });
+
+
     }
 
 

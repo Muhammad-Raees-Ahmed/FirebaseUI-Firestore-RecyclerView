@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnAdd = findViewById(R.id.add);
         btnAdd.setOnClickListener(this);
         firebaseModel = FirebaseModel.getInstance();
-        firebaseModel.getTaskData(this);
+        firebaseModel.getTaskData(this,detailArrayList);
     }
 
     @Override
@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (view.getId()) {
             case R.id.add:
                 showCustomDialog();
-                firebaseModel.getTaskData(this);
+                firebaseModel.getTaskData(this,detailArrayList);
                 break;
         }
     }

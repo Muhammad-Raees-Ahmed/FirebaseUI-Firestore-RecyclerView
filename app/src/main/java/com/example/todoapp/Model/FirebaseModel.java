@@ -111,6 +111,29 @@ public class FirebaseModel {
 
     }
 
+    public void getTaskData(MainActivity mainActivity){
+       db.collection(COLLECTION_USER)
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot value,
+                                @Nullable FirebaseFirestoreException e) {
+                if (e != null) {
+                    Log.w(TAG, "Listen failed.", e);
+                    return;
+                }
+
+                List<String> cities = new ArrayList<>();
+                for (QueryDocumentSnapshot doc : value) {
+                    if (doc.get("name") != null) {
+                        cities.add(doc.getString("name"));
+                        Toast.makeText(mainActivity, cities.toString(), Toast.LENGTH_SHORT).show();
+                    }
+                }
+                Log.d(TAG, "Current cites in CA: " + cities);
+            }
+        });
+    }
+
 
 
 }

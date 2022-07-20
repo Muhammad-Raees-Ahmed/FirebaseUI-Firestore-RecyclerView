@@ -113,28 +113,21 @@ public class FirebaseModel {
 
     public  void getTaskData(MainActivity mainActivity,List<Detail> detailList){
        db.collection(COLLECTION_USER)
-                .addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(@Nullable QuerySnapshot value,
-                                @Nullable FirebaseFirestoreException e) {
-                if (e != null) {
-                    Log.w(TAG, "Listen failed.", e);
-                    return;
-                }
-
-                List<String> cities = new ArrayList<>();
-                for (QueryDocumentSnapshot doc : value) {
-                    if (doc.get("name") != null) {
-                        cities.add(doc.getString("name"));
-                        Toast.makeText(mainActivity, cities.toString(), Toast.LENGTH_SHORT).show();
-                        detailList.add(doc.toObject(Detail.class));
-                        Toast.makeText(mainActivity, detailList.toString(), Toast.LENGTH_SHORT).show();
-
-                    }
-                }
-                Log.d(TAG, "Current cites in CA: " + cities);
-            }
-        });
+               .get()
+               .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                   @Override
+                   public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                       if (task.isSuccessful()) {
+                           for (QueryDocumentSnapshot document : task.getResult()) {
+                               Log.d(TAG, document.getId() + " => " + document.getData());
+                               Toast.makeText(mainActivity, document.getData().toString(), Toast.LENGTH_SHORT).show();
+//                               detailList.add(document.toObject(Detail.class));
+                           }
+                       } else {
+                           Log.d(TAG, "Error getting documents: ", task.getException());
+                       }
+                   }
+               });
 
 
     }

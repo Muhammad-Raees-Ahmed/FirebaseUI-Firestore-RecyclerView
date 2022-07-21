@@ -115,7 +115,7 @@ public class FirebaseModel {
        db.collection(COLLECTION_USER)
                .get()
                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                   // OVVERIDE METHOD
+                   // OVERRIDE METHOD
                    @Override
                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
                        if (task.isSuccessful()) {

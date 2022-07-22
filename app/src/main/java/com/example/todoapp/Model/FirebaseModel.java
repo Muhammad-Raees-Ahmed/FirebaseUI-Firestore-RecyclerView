@@ -32,7 +32,7 @@ public class FirebaseModel {
     private final FirebaseFirestore db;
 
 
-
+// check  instance
     public FirebaseModel() {
         db = FirebaseFirestore.getInstance();
     }

@@ -18,11 +18,12 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     //Declare Recyclerview , Adapter and ArrayList
     private RecyclerView recyclerView;
-    ArrayList<Detail> detailArrayList;
+ List<Detail> detailList;
     Button btnAdd, btnDone;
     TextInputLayout nameEt, taskEt;
     Boolean check = false;
@@ -35,11 +36,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 //        initView1();
-
+        detailList = new ArrayList<>();
         btnAdd = findViewById(R.id.add);
         btnAdd.setOnClickListener(this);
         firebaseModel = FirebaseModel.getInstance();
-        firebaseModel.getTaskData(this,detailArrayList);
+        firebaseModel.getTaskData(this,detailList);
     }
 
     @Override
@@ -47,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (view.getId()) {
             case R.id.add:
                 showCustomDialog();
-                firebaseModel.getTaskData(this,detailArrayList);
+                firebaseModel.getTaskData(this,detailList);
                 break;
         }
     }
@@ -77,21 +78,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // Initialize RecyclerView and set Adapter
         recyclerView = findViewById(R.id.todo_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        detailArrayList = new ArrayList<>();
-        DetailAdapter scoutAdapter = new DetailAdapter(this, detailArrayList);
-        recyclerView.setAdapter(scoutAdapter);
+
+//        DetailAdapter scoutAdapter = new DetailAdapter(this, detailList);
+//        recyclerView.setAdapter(scoutAdapter);
 //        createList1();
     }
 
-//    private void createList1() {
-//        //data to be shown in list
-//
-//        detailArrayList.add(new Detail("Eren Jaeger", "ioi"));
-//        detailArrayList.add(new Detail("Eren Jaeger", "ioi"));
-//        detailArrayList.add(new Detail("Eren Jaeger", "ioi"));
-//        detailArrayList.add(new Detail("Eren Jaeger", "ioi"));
-//
-//    }
+
 
     public void validateData() {
         String name = nameEt.getEditText().getText().toString();

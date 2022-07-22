@@ -101,7 +101,7 @@ public class FirebaseModel {
                         Log.d(TAG, "No such document");
                         Toast.makeText(mainActivity, "no ducument", Toast.LENGTH_SHORT).show();
                     }
-                    // else block
+
                 } else {
                     Log.d(TAG, "get failed with ", task.getException());
                     Toast.makeText(mainActivity, "get failed", Toast.LENGTH_SHORT).show();
@@ -115,7 +115,7 @@ public class FirebaseModel {
        db.collection(COLLECTION_USER)
                .get()
                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                   // OVERRIDE METHOD
+
                    @Override
                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
                        if (task.isSuccessful()) {
@@ -126,7 +126,7 @@ public class FirebaseModel {
                            }
                        } else {
 
-                           // ERROR BLOCK
+
                            Log.d(TAG, "Error getting documents: ", task.getException());
                        }
                    }

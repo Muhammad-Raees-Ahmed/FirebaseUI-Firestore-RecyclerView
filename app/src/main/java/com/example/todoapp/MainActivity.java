@@ -22,21 +22,22 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     //Declare Recyclerview , Adapter and ArrayList
+
     private RecyclerView recyclerView;
- ArrayList<Detail> detailList;
+    ArrayList<Detail> detailList;
     Button btnAdd, btnDone;
     TextInputLayout nameEt, taskEt;
-    Boolean check = false;
+
     FirebaseModel firebaseModel;
-    private FirebaseFirestore db;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-//        initView1();
-        detailList = new ArrayList<>();
+
+
+        initView1();
         btnAdd = findViewById(R.id.add);
         btnAdd.setOnClickListener(this);
         firebaseModel = FirebaseModel.getInstance();
@@ -75,12 +76,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void initView1() {
-        // Initialize RecyclerView and set Adapter
+        // Initialize RecyclerView and set
+
+
+        detailList = new ArrayList<>();
         recyclerView = findViewById(R.id.todo_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        DetailAdapter scoutAdapter = new DetailAdapter(this, detailList);
-        recyclerView.setAdapter(scoutAdapter);
+        DetailAdapter detailAdapter = new DetailAdapter(this, detailList);
+        recyclerView.setAdapter(detailAdapter);
 //        createList1();
     }
 

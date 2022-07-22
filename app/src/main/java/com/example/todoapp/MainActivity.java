@@ -23,7 +23,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     //Declare Recyclerview , Adapter and ArrayList
     private RecyclerView recyclerView;
- List<Detail> detailList;
+ ArrayList<Detail> detailList;
     Button btnAdd, btnDone;
     TextInputLayout nameEt, taskEt;
     Boolean check = false;
@@ -79,8 +79,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         recyclerView = findViewById(R.id.todo_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-//        DetailAdapter scoutAdapter = new DetailAdapter(this, detailList);
-//        recyclerView.setAdapter(scoutAdapter);
+        DetailAdapter scoutAdapter = new DetailAdapter(this, detailList);
+        recyclerView.setAdapter(scoutAdapter);
 //        createList1();
     }
 

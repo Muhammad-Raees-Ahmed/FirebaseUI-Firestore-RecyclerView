@@ -32,7 +32,7 @@ public class FirebaseModel {
     private final FirebaseFirestore db;
 
 
-
+// Array list and list both useful in this situation but good is arraylist for efficiency
 
 // check  instance
     public FirebaseModel() {
@@ -113,7 +113,7 @@ public class FirebaseModel {
 
     }
 
-    public  void getTaskData(MainActivity mainActivity,List<Detail> detailList){
+    public  void getTaskData(MainActivity mainActivity,ArrayList<Detail> detailList){
        db.collection(COLLECTION_USER)
                .get()
                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {

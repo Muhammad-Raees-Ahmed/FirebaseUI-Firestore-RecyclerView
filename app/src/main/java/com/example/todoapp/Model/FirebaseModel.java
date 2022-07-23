@@ -140,7 +140,28 @@ public class FirebaseModel {
                         }
                     }
                 });
+    }
 
+    public void tester(MainActivity mainActivity, ArrayList<Detail> detailList, DetailAdapter detailAdapter){
+ db.collection(COLLECTION_USER).orderBy("createdDate")
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        if ( error!= null) {
+Log.d("error ","error ocured");
+                        }
+
+                        for (QueryDocumentSnapshot document : value) {
+                            Log.d(TAG, document.getId() + " => " + document.getData());
+//                                Toast.makeText(mainActivity, document.getData().toString(), Toast.LENGTH_SHORT).show();
+                            Detail obj = document.toObject(Detail.class);
+                            detailList.add(obj);
+                        }
+                        // this is important when fetch from server and show in recyclerview
+                        detailAdapter.notifyDataSetChanged();
+                        Log.d(TAG, "Error getting documents: ");
+                    }
+                });
 
     }
 

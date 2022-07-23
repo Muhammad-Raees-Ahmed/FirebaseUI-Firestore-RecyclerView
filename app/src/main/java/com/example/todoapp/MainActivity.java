@@ -36,12 +36,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-        initView1();
+        initializeData();
         btnAdd = findViewById(R.id.add);
         btnAdd.setOnClickListener(this);
         firebaseModel = FirebaseModel.getInstance();
-//        firebaseModel.getTaskData(this,detailList);
+        firebaseModel.getTaskData(this,detailList);
+
 
 
     }
@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         dialog.show();
     }
 
-    private void initView1() {
+    private void initializeData() {
         // Initialize RecyclerView and set
 
 

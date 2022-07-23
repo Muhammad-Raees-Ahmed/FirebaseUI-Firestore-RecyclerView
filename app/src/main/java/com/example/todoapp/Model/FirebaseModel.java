@@ -124,7 +124,7 @@ public class FirebaseModel {
                            for (QueryDocumentSnapshot document : task.getResult()) {
                                Log.d(TAG, document.getId() + " => " + document.getData());
                                Toast.makeText(mainActivity, document.getData().toString(), Toast.LENGTH_SHORT).show();
-                               detailList.add(document.toObject(Detail.class));
+//                               detailList.add(document.toObject(Detail.class));
                            }
                        } else {
 

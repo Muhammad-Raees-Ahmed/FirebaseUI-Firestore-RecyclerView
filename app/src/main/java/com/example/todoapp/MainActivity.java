@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         detailAdapter = new DetailAdapter(this, detailList);
         recyclerView.setAdapter(detailAdapter);
-        Toast.makeText(this, detailList.toString(), Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, detailList.toString(), Toast.LENGTH_SHORT).show();
     }
 
 
@@ -123,7 +123,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Log.d(TAG, document.getId() + " => " + document.getData());
-                                Toast.makeText(mainActivity, document.getData().toString(), Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(mainActivity, document.getData().toString(), Toast.LENGTH_SHORT).show();
                                 Detail obj = document.toObject(Detail.class);
                                 detailList.add(obj);
                             }

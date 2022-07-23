@@ -8,8 +8,11 @@
     android:layout_marginVertical="5dp"
     android:orientation="horizontal">
     <RelativeLayout
+        android:id="@+id/r"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
+
 
         <ImageView
             android:id="@+id/taskImage"
@@ -21,17 +24,33 @@
             android:adjustViewBounds="true"
             android:background="@drawable/ic_baseline_image_24" />
 
-        <TextView
-            android:id="@+id/name"
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="3dp"
-            android:layout_toRightOf="@+id/taskImage"
-            android:padding="4dp"
-            android:text="raees"
-            android:textColor="@color/black"
-            android:textSize="16sp" />
+            android:layout_centerInParent="true"
+            android:orientation="vertical"
+            android:padding="2dp"
+            android:layout_toRightOf="@id/taskImage"
+            android:layout_marginLeft="7dp">
+
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
+                android:padding="2dp"
+                android:text="raees"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/task"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="2dp"
+                android:text="Study"/>
+        </LinearLayout>
 
         <androidx.cardview.widget.CardView
             android:id="@+id/delete"

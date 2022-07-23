@@ -44,15 +44,17 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
 
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView txtName, txtRank, txtKill;
+        private TextView txtName, txtTask, txtKill;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             txtName = itemView.findViewById(R.id.name);
+            txtTask=itemView.findViewById(R.id.task);
 
         }
 
         public void setDetails(Detail detail) {
             txtName.setText(detail.getName());
+            txtTask.setText(detail.getTask());
         }
     }
 

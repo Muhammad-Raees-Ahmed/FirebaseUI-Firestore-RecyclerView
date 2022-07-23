@@ -1,11 +1,16 @@
 package com.example.todoapp;
 
+import static android.content.ContentValues.TAG;
+import static com.example.todoapp.Model.immutable.COLLECTION_USER;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Dialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -14,11 +19,14 @@ import android.widget.Toast;
 import com.example.todoapp.Adapter.DetailAdapter;
 import com.example.todoapp.Model.Detail;
 import com.example.todoapp.Model.FirebaseModel;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     //Declare Recyclerview , Adapter and ArrayList
@@ -29,19 +37,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     TextInputLayout nameEt, taskEt;
 
     FirebaseModel firebaseModel;
-
+    DetailAdapter detailAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         initializeData();
         btnAdd = findViewById(R.id.add);
         btnAdd.setOnClickListener(this);
         firebaseModel = FirebaseModel.getInstance();
-        firebaseModel.getTaskData(this,detailList);
+//        firebaseModel.getTaskData(this, detailList);
 
+        getTaskData(MainActivity.this,detailList);
 
 
     }
@@ -54,6 +64,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
         }
     }
+
     //Function to display the custom dialog.
     void showCustomDialog() {
         final Dialog dialog = new Dialog(MainActivity.this);
@@ -69,8 +80,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void onClick(View v) {
                 validateData();
                 dialog.dismiss();
-
-
             }
         });
         dialog.show();
@@ -84,10 +93,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         recyclerView = findViewById(R.id.todo_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        DetailAdapter detailAdapter = new DetailAdapter(this, detailList);
+        detailAdapter = new DetailAdapter(this, detailList);
         recyclerView.setAdapter(detailAdapter);
+        Toast.makeText(this, detailList.toString(), Toast.LENGTH_SHORT).show();
     }
-
 
 
     public void validateData() {
@@ -102,5 +111,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         } else {
             Toast.makeText(this, "Enter Valid Inputs", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public void getTaskData(MainActivity mainActivity, ArrayList<Detail> detailList) {
+        Task<QuerySnapshot> docRef = FirebaseFirestore.getInstance().collection(COLLECTION_USER)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Log.d(TAG, document.getId() + " => " + document.getData());
+                                Toast.makeText(mainActivity, document.getData().toString(), Toast.LENGTH_SHORT).show();
+                                Detail obj = document.toObject(Detail.class);
+                                detailList.add(obj);
+                            }
+                            detailAdapter.notifyDataSetChanged();
+                        } else {
+
+
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+
     }
 }

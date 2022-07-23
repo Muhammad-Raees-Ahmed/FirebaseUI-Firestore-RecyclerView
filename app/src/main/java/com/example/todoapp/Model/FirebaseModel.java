@@ -35,7 +35,7 @@ public class FirebaseModel {
 
 // Array list and list both useful in this situation but good is arraylist for efficiency
 
-// check  instance
+    // check  instance
     public FirebaseModel() {
         db = FirebaseFirestore.getInstance();
     }
@@ -81,8 +81,8 @@ public class FirebaseModel {
                             System.out.println(list);
                             //
                             Toast.makeText(mainActivity, list.toString(), Toast.LENGTH_LONG).show();
-                        } else{
-                            Log.d("error","no result");
+                        } else {
+                            Log.d("error", "no result");
                         }
                     }
                 });
@@ -114,11 +114,13 @@ public class FirebaseModel {
 
     }
 
-    public  void getTaskData(MainActivity mainActivity, ArrayList<Detail> detailList, DetailAdapter detailAdapter){
+    public void getTaskData(MainActivity mainActivity, ArrayList<Detail> detailList, DetailAdapter detailAdapter) {
         // always use query snap shot for getting multiple document
         // if we want to fetch data another class and show in other class,activity,fragment so we must use query snapshot
         // Document Refrence can do this all but can't pass data or show
-        Task<QuerySnapshot> querySnapshotTask = FirebaseFirestore.getInstance().collection(COLLECTION_USER)
+
+        // Task<QuerySnapshot> querySnapshotQuery= we can also write this when we are not using snapshot listeners (is ke jaga )  db.collection(COLLECTION_USER)
+       db.collection(COLLECTION_USER)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
 
@@ -142,13 +144,15 @@ public class FirebaseModel {
                 });
     }
 
-    public void tester(MainActivity mainActivity, ArrayList<Detail> detailList, DetailAdapter detailAdapter){
- db.collection(COLLECTION_USER).orderBy("createdDate")
+    public void tester(MainActivity mainActivity, ArrayList<Detail> detailList, DetailAdapter detailAdapter) {
+
+        //  Task<QuerySnapshot> querySnapshotQuery= we can't use this when we use snapshot listners
+        db.collection(COLLECTION_USER).orderBy("createdDate")
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                        if ( error!= null) {
-Log.d("error ","error ocured");
+                        if (error != null) {
+                            Log.d("error ", "error ocured");
                         }
 
                         for (QueryDocumentSnapshot document : value) {
@@ -164,7 +168,6 @@ Log.d("error ","error ocured");
                 });
 
     }
-
 
 
 }

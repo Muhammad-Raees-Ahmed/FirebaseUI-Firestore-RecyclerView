@@ -49,7 +49,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnAdd = findViewById(R.id.add);
         btnAdd.setOnClickListener(this);
         firebaseModel = FirebaseModel.getInstance();
-        firebaseModel.tester(this, detailList,detailAdapter);
+//        firebaseModel.tester(this, detailList,detailAdapter);
+        firebaseModel.getTaskData(this,detailList,detailAdapter);
 
 //        getTaskData(MainActivity.this,detailList);
 

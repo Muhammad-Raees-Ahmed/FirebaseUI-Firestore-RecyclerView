@@ -41,7 +41,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnAdd = findViewById(R.id.add);
         btnAdd.setOnClickListener(this);
         firebaseModel = FirebaseModel.getInstance();
-        firebaseModel.getTaskData(this,detailList);
+//        firebaseModel.getTaskData(this,detailList);
+
+
     }
 
     @Override
@@ -49,7 +51,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (view.getId()) {
             case R.id.add:
                 showCustomDialog();
-                firebaseModel.getTaskData(this,detailList);
                 break;
         }
     }
@@ -85,7 +86,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         DetailAdapter detailAdapter = new DetailAdapter(this, detailList);
         recyclerView.setAdapter(detailAdapter);
-//        createList1();
     }
 
 

@@ -9,6 +9,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.example.todoapp.Adapter.DetailAdapter;
 import com.example.todoapp.MainActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -113,26 +114,32 @@ public class FirebaseModel {
 
     }
 
-    public  void getTaskData(MainActivity mainActivity,ArrayList<Detail> detailList){
-       db.collection(COLLECTION_USER)
-               .get()
-               .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+    public  void getTaskData(MainActivity mainActivity, ArrayList<Detail> detailList, DetailAdapter detailAdapter){
+        // always use query snap shot for getting multiple document
+        // if we want to fetch data another class and show in other class,activity,fragment so we must use query snapshot
+        // Document Refrence can do this all but can't pass data or show
+        Task<QuerySnapshot> docRef = FirebaseFirestore.getInstance().collection(COLLECTION_USER)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
 
-                   @Override
-                   public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                       if (task.isSuccessful()) {
-                           for (QueryDocumentSnapshot document : task.getResult()) {
-                               Log.d(TAG, document.getId() + " => " + document.getData());
-                               Toast.makeText(mainActivity, document.getData().toString(), Toast.LENGTH_SHORT).show();
-                               detailList.add(document.toObject(Detail.class));
-                           }
-                       } else {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Log.d(TAG, document.getId() + " => " + document.getData());
+//                                Toast.makeText(mainActivity, document.getData().toString(), Toast.LENGTH_SHORT).show();
+                                Detail obj = document.toObject(Detail.class);
+                                detailList.add(obj);
+                            }
+                            // this is important when fetch from server and show in recyclerview
+                            detailAdapter.notifyDataSetChanged();
+                        } else {
 
 
-                           Log.d(TAG, "Error getting documents: ", task.getException());
-                       }
-                   }
-               });
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
 
 
     }

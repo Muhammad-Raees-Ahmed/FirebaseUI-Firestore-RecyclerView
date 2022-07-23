@@ -118,7 +118,7 @@ public class FirebaseModel {
         // always use query snap shot for getting multiple document
         // if we want to fetch data another class and show in other class,activity,fragment so we must use query snapshot
         // Document Refrence can do this all but can't pass data or show
-        Task<QuerySnapshot> docRef = FirebaseFirestore.getInstance().collection(COLLECTION_USER)
+        Task<QuerySnapshot> querySnapshotTask = FirebaseFirestore.getInstance().collection(COLLECTION_USER)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
 

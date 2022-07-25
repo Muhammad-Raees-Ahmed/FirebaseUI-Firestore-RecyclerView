@@ -145,7 +145,7 @@ public class FirebaseModel {
     }
 
     public void tester(MainActivity mainActivity, ArrayList<Detail> detailList, DetailAdapter detailAdapter) {
-// just for testing
+
         //  Task<QuerySnapshot> querySnapshotQuery= we can't use this when we use snapshot listners
         db.collection(COLLECTION_USER).orderBy("createdDate")
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {

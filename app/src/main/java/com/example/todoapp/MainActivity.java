@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnAdd.setOnClickListener(this);
         firebaseModel = FirebaseModel.getInstance();
 //        firebaseModel.tester(this, detailList,detailAdapter);
-        firebaseModel.getTaskData(this,detailList,detailAdapter);
+        firebaseModel.getUserTask(this,detailList,detailAdapter);
 
 //        getTaskData(MainActivity.this,detailList);
 
@@ -113,7 +113,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Toast.makeText(this, "Enter Valid Inputs", Toast.LENGTH_SHORT).show();
         }
     }
-
+// can delete this method
     public void getTaskData(MainActivity mainActivity, ArrayList<Detail> detailList) {
         Task<QuerySnapshot> docRef = FirebaseFirestore.getInstance().collection(COLLECTION_USER)
                 .get()

@@ -113,7 +113,7 @@ public class FirebaseModel {
         });
 
     }
-
+// get without snapshot listners
     public void getTaskData(MainActivity mainActivity, ArrayList<Detail> detailList, DetailAdapter detailAdapter) {
         // always use query snap shot for getting multiple document
         // if we want to fetch data another class and show in other class,activity,fragment so we must use query snapshot
@@ -143,8 +143,8 @@ public class FirebaseModel {
                     }
                 });
     }
-
-    public void tester(MainActivity mainActivity, ArrayList<Detail> detailList, DetailAdapter detailAdapter) {
+    // get with snapshot listners
+    public void getUserTask(MainActivity mainActivity, ArrayList<Detail> detailList, DetailAdapter detailAdapter) {
 
         //  Task<QuerySnapshot> querySnapshotQuery= we can't use this when we use snapshot listners
         db.collection(COLLECTION_USER).orderBy("createdDate")

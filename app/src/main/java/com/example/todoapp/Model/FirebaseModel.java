@@ -3,6 +3,7 @@ package com.example.todoapp.Model;
 import static android.content.ContentValues.TAG;
 import static com.example.todoapp.Model.immutable.COLLECTION_USER;
 import static com.example.todoapp.Model.immutable.COLLECTION_USER_CREATED_DATE;
+import static com.example.todoapp.Model.immutable.COLLECTION_USER_ID;
 
 import android.content.Context;
 import android.util.Log;
@@ -172,6 +173,7 @@ public class FirebaseModel {
                 });
 
     }
+    // delete task
     public  void deleteTask(Context context,String userId){
         db.collection(COLLECTION_USER).document(userId)
                 .delete()
@@ -187,6 +189,27 @@ public class FirebaseModel {
                     }
                 });
 
+    }
+    // get user data for edit
+    public void getData(Context context,String id){
+        db.collection(COLLECTION_USER)
+                .whereEqualTo(COLLECTION_USER_ID,id)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Log.d(TAG, document.getId() + " => " + document.getData());
+//                                Toast.makeText(mainActivity, document.getData().toString(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(context, document.getData().toString(), Toast.LENGTH_SHORT).show();
+                            }
+
+                        } else {
+                            Toast.makeText(context, "Not Fetched", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
     }
 
 }

@@ -50,7 +50,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnAdd.setOnClickListener(this);
         firebaseModel = FirebaseModel.getInstance();
 //        firebaseModel.tester(this, detailList,detailAdapter);
-        firebaseModel.getUserTask(this,detailList,detailAdapter);
+
+        firebaseModel.getUserTask(MainActivity.this,detailList,detailAdapter);
 
 //        getTaskData(MainActivity.this,detailList);
 
@@ -62,6 +63,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (view.getId()) {
             case R.id.add:
                 showCustomDialog();
+                detailList.clear();
                 break;
         }
     }

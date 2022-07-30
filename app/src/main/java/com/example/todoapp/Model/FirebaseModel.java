@@ -3,6 +3,7 @@ package com.example.todoapp.Model;
 import static android.content.ContentValues.TAG;
 import static com.example.todoapp.Model.immutable.COLLECTION_USER;
 
+import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -114,7 +115,7 @@ public class FirebaseModel {
 
     }
 // get without snapshot listners
-    public void getTaskData(MainActivity mainActivity, ArrayList<Detail> detailList, DetailAdapter detailAdapter) {
+    public void getTaskData(Context context, ArrayList<Detail> detailList, DetailAdapter detailAdapter) {
         // always use query snap shot for getting multiple document
         // if we want to fetch data another class and show in other class,activity,fragment so we must use query snapshot
         // Document Refrence can do this all but can't pass data or show
@@ -144,7 +145,7 @@ public class FirebaseModel {
                 });
     }
     // get with snapshot listners
-    public void getUserTask(MainActivity mainActivity, ArrayList<Detail> detailList, DetailAdapter detailAdapter) {
+    public void getUserTask(Context context, ArrayList<Detail> detailList, DetailAdapter detailAdapter) {
 
         //  Task<QuerySnapshot> querySnapshotQuery= we can't use this when we use snapshot listners
         db.collection(COLLECTION_USER).orderBy("createdDate")
@@ -168,7 +169,22 @@ public class FirebaseModel {
                 });
 
     }
+    public  void deleteTask(Context context,String userId){
+        db.collection(COLLECTION_USER).document(userId)
+                .delete()
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()){
+                            Log.d("task delete ","successful");
+                        }
+                        else{
+                            Log.d("task status","not deleted");
+                        }
+                    }
+                });
 
+    }
 
 }
 

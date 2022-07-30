@@ -17,7 +17,7 @@ import com.example.todoapp.R;
 
 import java.util.ArrayList;
 
-public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder> {
+public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder> implements View.OnClickListener {
 
     private Context context;
     private ArrayList<Detail> details;
@@ -45,22 +45,34 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
 
 
         // handle when click on delete icon
-        holder.delete_cv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                details.clear();
-                Toast.makeText(context, "clicked", Toast.LENGTH_SHORT).show();
-                firebaseModel.deleteTask(context.getApplicationContext(), detail.getId());
-//                Toast.makeText(context, detail.getId(), Toast.LENGTH_SHORT).show();
+        holder.delete_cv.setOnClickListener(this);
 
-            }
-        });
+
+        // handle when click on edit icon
+//        holder.edit_cv.setOnClickListener(this);
+
 
     }
 
     @Override
     public int getItemCount() {
         return details.size();
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.delete:
+                details.clear();
+                Toast.makeText(context, "clicked", Toast.LENGTH_SHORT).show();
+                firebaseModel.deleteTask(context.getApplicationContext(), detail.getId());
+                break;
+//            case R.id.edit:
+//                Toast.makeText(context, "clicked", Toast.LENGTH_SHORT).show();
+//                firebaseModel.getData(context, detail.getId());
+        }
+
+
     }
 
 
@@ -72,6 +84,9 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
             txtName = itemView.findViewById(R.id.name);
             txtTask=itemView.findViewById(R.id.task);
             delete_cv=itemView.findViewById(R.id.delete);
+            edit_cv=itemView.findViewById(R.id.edit);
+
+            edit_cv.setVisibility(View.INVISIBLE);
 
         }
 

@@ -2,6 +2,7 @@ package com.example.todoapp.Model;
 
 import static android.content.ContentValues.TAG;
 import static com.example.todoapp.Model.immutable.COLLECTION_USER;
+import static com.example.todoapp.Model.immutable.COLLECTION_USER_CREATED_DATE;
 
 import android.content.Context;
 import android.util.Log;
@@ -148,7 +149,9 @@ public class FirebaseModel {
     public void getUserTask(Context context, ArrayList<Detail> detailList, DetailAdapter detailAdapter) {
 
         //  Task<QuerySnapshot> querySnapshotQuery= we can't use this when we use snapshot listners
-        db.collection(COLLECTION_USER).orderBy("createdDate")
+
+        // Query.Direction.DESCENDING  ye neechy se data lana  shoro karta ha is se newly added top pr ajata ha
+        db.collection(COLLECTION_USER).orderBy(COLLECTION_USER_CREATED_DATE, Query.Direction.DESCENDING)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {

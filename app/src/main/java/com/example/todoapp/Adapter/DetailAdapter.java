@@ -48,17 +48,11 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
         holder.delete_cv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                details.clear();
                 Toast.makeText(context, "clicked", Toast.LENGTH_SHORT).show();
-//                firebaseModel.deleteTask(context.getApplicationContext(), detail.getId());
+                firebaseModel.deleteTask(context.getApplicationContext(), detail.getId());
 //                Toast.makeText(context, detail.getId(), Toast.LENGTH_SHORT).show();
-//                detailAdapter = new DetailAdapter(context.getApplicationContext(), details);
-//                try{
-//                    firebaseModel.getUserTask(context.getApplicationContext(), details,detailAdapter);
-//                }catch (Exception e){
-//                    System.out.println(e);
-//                }
 
-//                firebaseModel.getUserTask(context,details,detailAdapter);
             }
         });
 

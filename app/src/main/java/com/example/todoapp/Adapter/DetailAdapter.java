@@ -1,9 +1,15 @@
 package com.example.todoapp.Adapter;
 
+import static android.content.ContentValues.TAG;
+import static com.example.todoapp.Model.immutable.COLLECTION_USER;
+
+import android.app.Dialog;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -11,9 +17,14 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.todoapp.MainActivity;
 import com.example.todoapp.Model.Detail;
 import com.example.todoapp.Model.FirebaseModel;
 import com.example.todoapp.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 
@@ -24,6 +35,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
     FirebaseModel firebaseModel;
     Detail detail;
     DetailAdapter detailAdapter;
+    MainActivity m;
 
     public DetailAdapter(Context context, ArrayList<Detail> details) {
         this.context = context;
@@ -49,7 +61,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
 
 
         // handle when click on edit icon
-//        holder.edit_cv.setOnClickListener(this);
+        holder.edit_cv.setOnClickListener(this);
 
 
     }
@@ -66,19 +78,56 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                 details.clear();
                 Toast.makeText(context, "clicked", Toast.LENGTH_SHORT).show();
                 firebaseModel.deleteTask(context.getApplicationContext(), detail.getId());
+//                firebaseModel.getUserTask(context.getApplicationContext(),details,detailAdapter);
                 break;
-//            case R.id.edit:
-//                Toast.makeText(context, "clicked", Toast.LENGTH_SHORT).show();
-//                firebaseModel.getData(context, detail.getId());
+            case R.id.edit:
+                Toast.makeText(context, "coming soon", Toast.LENGTH_SHORT).show();
+//                FirebaseFirestore.getInstance().collection(COLLECTION_USER).document(detail.getId())
+//                        .get()
+//                        .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+//                            @Override
+//                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+//                                if (task.isSuccessful()) {
+//                                    DocumentSnapshot document = task.getResult();
+//                                    if (document.exists()) {
+//                                        Log.d(TAG, "DocumentSnapshot data: " + document.getData());
+//                                        Toast.makeText(context, document.getData().toString(), Toast.LENGTH_SHORT).show();
+//                                        Detail obj = document.toObject(Detail.class);
+//                                        ViewHolder.setDetails(obj);
+//                                        final Dialog dialog = new Dialog(view.getContext());
+//                                        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+//                                        dialog.setCancelable(true);
+//                                        dialog.setContentView(R.layout.add_todo_dialog);
+//                                        dialog.show();
+//
+//
+//
+//                                        String e_name=document.getData().get("name").toString();
+//                                        String e_task=document.getData().get("task").toString();
+//                                        Toast.makeText(context, e_name+e_task, Toast.LENGTH_SHORT).show();
+//                                        ViewHolder.txtName.setText(detail.getName());
+//                                        ViewHolder.txtTask.setText(detail.getTask());
+//
+//
+//                                    } else {
+//                                        Log.d(TAG, "No such document");
+//                                    }
+//                                } else {
+//                                    Log.d(TAG, "get failed with ", task.getException());
+//                                }
+//                            }
+//                        });
         }
 
 
     }
 
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView txtName, txtTask;
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        private static TextView txtName;
+        private static TextView txtTask;
         CardView delete_cv,edit_cv;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             txtName = itemView.findViewById(R.id.name);
@@ -86,14 +135,15 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
             delete_cv=itemView.findViewById(R.id.delete);
             edit_cv=itemView.findViewById(R.id.edit);
 
-            edit_cv.setVisibility(View.INVISIBLE);
+//            edit_cv.setVisibility(View.INVISIBLE);
 
         }
 
-        public void setDetails(Detail detail) {
+        public static void setDetails(Detail detail) {
             txtName.setText(detail.getName());
             txtTask.setText(detail.getTask());
         }
+
     }
 
 }

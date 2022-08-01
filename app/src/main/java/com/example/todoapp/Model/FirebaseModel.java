@@ -147,7 +147,7 @@ public class FirebaseModel {
                 });
     }
     // get with snapshot listners
-    public void getUserTask(Context context, ArrayList<Detail> detailList, DetailAdapter detailAdapter) {
+    public void getUserTask(MainActivity mainActivity, ArrayList<Detail> detailList, DetailAdapter detailAdapter) {
 
         //  Task<QuerySnapshot> querySnapshotQuery= we can't use this when we use snapshot listners
 
@@ -192,21 +192,21 @@ public class FirebaseModel {
     }
     // get user data for edit
     public void getData(Context context,String id){
-        db.collection(COLLECTION_USER)
-                .whereEqualTo(COLLECTION_USER_ID,id)
+        db.collection(COLLECTION_USER).document(id)
                 .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                         if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.d(TAG, document.getId() + " => " + document.getData());
-//                                Toast.makeText(mainActivity, document.getData().toString(), Toast.LENGTH_SHORT).show();
+                            DocumentSnapshot document = task.getResult();
+                            if (document.exists()) {
+                                Log.d(TAG, "DocumentSnapshot data: " + document.getData());
                                 Toast.makeText(context, document.getData().toString(), Toast.LENGTH_SHORT).show();
+                            } else {
+                                Log.d(TAG, "No such document");
                             }
-
                         } else {
-                            Toast.makeText(context, "Not Fetched", Toast.LENGTH_SHORT).show();
+                            Log.d(TAG, "get failed with ", task.getException());
                         }
                     }
                 });

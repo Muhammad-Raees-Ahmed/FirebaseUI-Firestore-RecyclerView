@@ -49,12 +49,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnAdd = findViewById(R.id.add);
         btnAdd.setOnClickListener(this);
         firebaseModel = FirebaseModel.getInstance();
-//        firebaseModel.tester(this, detailList,detailAdapter);
 
-        firebaseModel.getUserTask(MainActivity.this,detailList,detailAdapter);
-
-//        getTaskData(MainActivity.this,detailList);
-
+        firebaseModel.getTaskData(MainActivity.this,detailList,detailAdapter);
 
     }
 
@@ -62,8 +58,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.add:
+//                firebaseModel.getTaskData(MainActivity.this,detailList,detailAdapter);
                 showCustomDialog();
-                detailList.clear();
                 break;
         }
     }
@@ -78,6 +74,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         taskEt = dialog.findViewById(R.id.task);
 
         btnDone = dialog.findViewById(R.id.btn_done);
+        detailList.clear();
         btnDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -111,6 +108,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             firebaseModel.addTask(this, name, task);
 //            detailArrayList.add(new Detail(name, task));
             Toast.makeText(this, "Successfully Added", Toast.LENGTH_SHORT).show();
+            firebaseModel.getTaskData(MainActivity.this,detailList,detailAdapter);
         } else {
             Toast.makeText(this, "Enter Valid Inputs", Toast.LENGTH_SHORT).show();
         }

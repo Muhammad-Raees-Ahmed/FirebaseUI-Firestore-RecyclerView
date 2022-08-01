@@ -117,10 +117,13 @@ public class FirebaseModel {
 
     }
 // get without snapshot listners
+
     public void getTaskData(Context context, ArrayList<Detail> detailList, DetailAdapter detailAdapter) {
         // always use query snap shot for getting multiple document
         // if we want to fetch data another class and show in other class,activity,fragment so we must use query snapshot
         // Document Refrence can do this all but can't pass data or show
+
+        // Query.Direction.DESCENDING // ye nahi likha ha ye lihk ny sy issue arha ha
 
         // Task<QuerySnapshot> querySnapshotQuery= we can also write this when we are not using snapshot listeners (is ke jaga )  db.collection(COLLECTION_USER)
        db.collection(COLLECTION_USER)

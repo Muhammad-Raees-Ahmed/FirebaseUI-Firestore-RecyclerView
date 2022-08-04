@@ -78,7 +78,10 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                 details.clear();
                 Toast.makeText(context, "clicked", Toast.LENGTH_SHORT).show();
                 firebaseModel.deleteTask(context.getApplicationContext(), detail.getId());
-//                firebaseModel.getUserTask(context.getApplicationContext(),details,detailAdapter);
+                details.clear();
+                detailAdapter =new DetailAdapter(context.getApplicationContext(), details);
+
+                firebaseModel.getUserTask(context.getApplicationContext(),details,detailAdapter);
                 break;
             case R.id.edit:
                 Toast.makeText(context, "coming soon", Toast.LENGTH_SHORT).show();
@@ -142,6 +145,10 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
         public static void setDetails(Detail detail) {
             txtName.setText(detail.getName());
             txtTask.setText(detail.getTask());
+
+
+
+
         }
 
     }

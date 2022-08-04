@@ -150,7 +150,7 @@ public class FirebaseModel {
                 });
     }
     // get with snapshot listners
-    public void getUserTask(MainActivity mainActivity, ArrayList<Detail> detailList, DetailAdapter detailAdapter) {
+    public void getUserTask(Context context, ArrayList<Detail> detailList, DetailAdapter detailAdapter) {
 
         //  Task<QuerySnapshot> querySnapshotQuery= we can't use this when we use snapshot listners
 

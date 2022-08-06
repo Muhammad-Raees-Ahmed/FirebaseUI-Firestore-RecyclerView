@@ -6,10 +6,12 @@ plugins {
 android {
     compileSdk 32
 
+
     defaultConfig {
         applicationId "com.example.todoapp"
         minSdk 26
         targetSdk 32
+        // version code will change when we upload on google play store
         versionCode 1
         versionName "1.0"
 

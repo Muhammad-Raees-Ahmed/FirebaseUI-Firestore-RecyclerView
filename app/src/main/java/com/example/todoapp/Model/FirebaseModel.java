@@ -126,13 +126,15 @@ public class FirebaseModel {
         // Query.Direction.DESCENDING // ye nahi likha ha ye lihk ny sy issue arha ha
 
         // Task<QuerySnapshot> querySnapshotQuery= we can also write this when we are not using snapshot listeners (is ke jaga )  db.collection(COLLECTION_USER)
-       db.collection(COLLECTION_USER)
+        Task<QuerySnapshot> querySnapshotQuery=  db.collection(COLLECTION_USER)
+               .orderBy(COLLECTION_USER_CREATED_DATE,Query.Direction.DESCENDING)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
 
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
+                            detailList.clear();
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Log.d(TAG, document.getId() + " => " + document.getData());
 //                                Toast.makeText(mainActivity, document.getData().toString(), Toast.LENGTH_SHORT).show();
@@ -140,7 +142,10 @@ public class FirebaseModel {
                                 detailList.add(obj);
                             }
                             // this is important when fetch from server and show in recyclerview
+
                             detailAdapter.notifyDataSetChanged();
+
+
                         } else {
 
 
@@ -214,6 +219,7 @@ public class FirebaseModel {
                     }
                 });
     }
+
 
 }
 

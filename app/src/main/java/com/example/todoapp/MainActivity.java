@@ -108,10 +108,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             firebaseModel.addTask(this, name, task);
 //            detailArrayList.add(new Detail(name, task));
             Toast.makeText(this, "Successfully Added", Toast.LENGTH_SHORT).show();
-            firebaseModel.getTaskData(MainActivity.this,detailList,detailAdapter);
+
+
+
+
         } else {
             Toast.makeText(this, "Enter Valid Inputs", Toast.LENGTH_SHORT).show();
         }
     }
+    public void refresh(){
+        firebaseModel.getTaskData(MainActivity.this,detailList,detailAdapter);
+    }
+
 
 }

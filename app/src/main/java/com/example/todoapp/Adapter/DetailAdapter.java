@@ -84,6 +84,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                 firebaseModel.getUserTask(context.getApplicationContext(),details,detailAdapter);
                 break;
             case R.id.edit:
+
                 Toast.makeText(context, "coming soon", Toast.LENGTH_SHORT).show();
 //                FirebaseFirestore.getInstance().collection(COLLECTION_USER).document(detail.getId())
 //                        .get()

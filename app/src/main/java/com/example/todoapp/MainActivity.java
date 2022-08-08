@@ -50,8 +50,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnAdd.setOnClickListener(this);
         firebaseModel = FirebaseModel.getInstance();
 
-        firebaseModel.getTaskData(MainActivity.this,detailList,detailAdapter);
+//        detailList.clear();
+////        firebaseModel.getTaskData(MainActivity.this,detailList,detailAdapter);
+//        firebaseModel.getUserTask(MainActivity.this,detailList,detailAdapter);
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        firebaseModel.getTaskData(MainActivity.this,detailList,detailAdapter);
     }
 
     @Override
@@ -74,7 +82,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         taskEt = dialog.findViewById(R.id.task);
 
         btnDone = dialog.findViewById(R.id.btn_done);
-        detailList.clear();
         btnDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -106,19 +113,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (name.length() >= 1 && task.length() >= 1) {
 
             firebaseModel.addTask(this, name, task);
-//            detailArrayList.add(new Detail(name, task));
-            Toast.makeText(this, "Successfully Added", Toast.LENGTH_SHORT).show();
-
-
-
+//            Toast.makeText(this, "Successfully Added", Toast.LENGTH_SHORT).show();
 
         } else {
             Toast.makeText(this, "Enter Valid Inputs", Toast.LENGTH_SHORT).show();
         }
     }
-    public void refresh(){
-        firebaseModel.getTaskData(MainActivity.this,detailList,detailAdapter);
+
+    public void updateUI(boolean isSuccess) {
+        if (isSuccess) {
+            Toast.makeText(MainActivity.this, "Successfully Added", Toast.LENGTH_LONG).show();
+//            detailList.clear();
+////            firebaseModel.getTaskData(MainActivity.this,detailList,detailAdapter);
+//            detailAdapter.notifyDataSetChanged();
+//            firebaseModel.getTaskData(MainActivity.this,detailList,detailAdapter);
+
+        } else {
+            Toast.makeText(MainActivity.this, "Network error1", Toast.LENGTH_LONG).show();
+
+        }
+
     }
-
-
 }

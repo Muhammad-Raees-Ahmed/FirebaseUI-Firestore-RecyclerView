@@ -53,18 +53,7 @@ public class FirebaseModel {
     public void addTask(MainActivity mainActivity, String name, String task) {
         DocumentReference doc = FirebaseFirestore.getInstance().collection(COLLECTION_USER).document();
         doc.set(new Detail(doc.getId(), name, task, new Date().getTime()))
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
-                        Log.d("Inserted", "pass");
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.d("Inserted", "fail");
-                    }
-                });
+                .addOnCompleteListener(task1 -> mainActivity.updateUI(task1.isSuccessful()));
     }
 
     // get document id from collection "user" without snapshot listeners
@@ -116,8 +105,8 @@ public class FirebaseModel {
         });
 
     }
-// get without snapshot listners
 
+// get without snapshot listners
     public void getTaskData(Context context, ArrayList<Detail> detailList, DetailAdapter detailAdapter) {
         // always use query snap shot for getting multiple document
         // if we want to fetch data another class and show in other class,activity,fragment so we must use query snapshot
@@ -126,7 +115,7 @@ public class FirebaseModel {
         // Query.Direction.DESCENDING // ye nahi likha ha ye lihk ny sy issue arha ha
 
         // Task<QuerySnapshot> querySnapshotQuery= we can also write this when we are not using snapshot listeners (is ke jaga )  db.collection(COLLECTION_USER)
-        Task<QuerySnapshot> querySnapshotQuery=  db.collection(COLLECTION_USER)
+        Task<QuerySnapshot> task2=  db.collection(COLLECTION_USER)
                .orderBy(COLLECTION_USER_CREATED_DATE,Query.Direction.DESCENDING)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -141,13 +130,11 @@ public class FirebaseModel {
                                 Detail obj = document.toObject(Detail.class);
                                 detailList.add(obj);
                             }
-                            // this is important when fetch from server and show in recyclerview
+                            // this is important
 
                             detailAdapter.notifyDataSetChanged();
 
-
                         } else {
-
 
                             Log.d(TAG, "Error getting documents: ", task.getException());
                         }
@@ -160,7 +147,8 @@ public class FirebaseModel {
         //  Task<QuerySnapshot> querySnapshotQuery= we can't use this when we use snapshot listners
 
         // Query.Direction.DESCENDING  ye neechy se data lana  shoro karta ha is se newly added top pr ajata ha
-        db.collection(COLLECTION_USER).orderBy(COLLECTION_USER_CREATED_DATE, Query.Direction.DESCENDING)
+        db.collection(COLLECTION_USER)
+                .orderBy(COLLECTION_USER_CREATED_DATE, Query.Direction.DESCENDING)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
@@ -173,9 +161,10 @@ public class FirebaseModel {
 //                                Toast.makeText(mainActivity, document.getData().toString(), Toast.LENGTH_SHORT).show();
                             Detail obj = document.toObject(Detail.class);
                             detailList.add(obj);
+                            detailAdapter.notifyDataSetChanged();
                         }
                         // this is important when fetch from server and show in recyclerview
-                        detailAdapter.notifyDataSetChanged();
+
                         Log.d(TAG, "Error getting documents: ");
                     }
                 });

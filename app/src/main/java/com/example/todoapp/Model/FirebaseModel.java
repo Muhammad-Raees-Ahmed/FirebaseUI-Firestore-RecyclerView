@@ -3,7 +3,6 @@ package com.example.todoapp.Model;
 import static android.content.ContentValues.TAG;
 import static com.example.todoapp.Model.immutable.COLLECTION_USER;
 import static com.example.todoapp.Model.immutable.COLLECTION_USER_CREATED_DATE;
-import static com.example.todoapp.Model.immutable.COLLECTION_USER_ID;
 
 import android.content.Context;
 import android.util.Log;
@@ -15,8 +14,6 @@ import androidx.annotation.Nullable;
 import com.example.todoapp.Adapter.DetailAdapter;
 import com.example.todoapp.MainActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -107,7 +104,7 @@ public class FirebaseModel {
     }
 
 // get without snapshot listners
-    public void getTaskData(Context context, ArrayList<Detail> detailList, DetailAdapter detailAdapter) {
+    public void getTaskData(MainActivity context, List<Detail> detailList) {
         // always use query snap shot for getting multiple document
         // if we want to fetch data another class and show in other class,activity,fragment so we must use query snapshot
         // Document Refrence can do this all but can't pass data or show
@@ -118,31 +115,23 @@ public class FirebaseModel {
         Task<QuerySnapshot> task2=  db.collection(COLLECTION_USER)
                .orderBy(COLLECTION_USER_CREATED_DATE,Query.Direction.DESCENDING)
                 .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            detailList.clear();
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.d(TAG, document.getId() + " => " + document.getData());
+                .addOnCompleteListener(task ->{
+                    if (task.isSuccessful()) {
+                        detailList.clear();
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            Log.d(TAG, document.getId() + " => " + document.getData());
 //                                Toast.makeText(mainActivity, document.getData().toString(), Toast.LENGTH_SHORT).show();
-                                Detail obj = document.toObject(Detail.class);
-                                detailList.add(obj);
-                            }
-                            // this is important
-
-                            detailAdapter.notifyDataSetChanged();
-
-                        } else {
-
-                            Log.d(TAG, "Error getting documents: ", task.getException());
+                            Detail obj = document.toObject(Detail.class);
+                            detailList.add(obj);
                         }
+                        context.updateUI(true);
+                    } else {
+                        Log.w(TAG, "Error getting documents.", task.getException());
                     }
                 });
     }
     // get with snapshot listners
-    public void getUserTask(Context context, ArrayList<Detail> detailList, DetailAdapter detailAdapter) {
+    public void getUserTask(Context context, List<Detail> detailList, DetailAdapter detailAdapter) {
 
         //  Task<QuerySnapshot> querySnapshotQuery= we can't use this when we use snapshot listners
 
@@ -161,10 +150,10 @@ public class FirebaseModel {
 //                                Toast.makeText(mainActivity, document.getData().toString(), Toast.LENGTH_SHORT).show();
                             Detail obj = document.toObject(Detail.class);
                             detailList.add(obj);
-                            detailAdapter.notifyDataSetChanged();
+
                         }
                         // this is important when fetch from server and show in recyclerview
-
+                        detailAdapter.notifyDataSetChanged();
                         Log.d(TAG, "Error getting documents: ");
                     }
                 });

@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.app.Dialog;
 import android.os.Bundle;
@@ -19,6 +20,7 @@ import android.widget.Toast;
 import com.example.todoapp.Adapter.DetailAdapter;
 import com.example.todoapp.Model.Detail;
 import com.example.todoapp.Model.FirebaseModel;
+import com.example.todoapp.Model.My;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
@@ -27,14 +29,17 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     //Declare Recyclerview , Adapter and ArrayList
 
     private RecyclerView recyclerView;
-    ArrayList<Detail> detailList;
+    List<Detail> todoList;
     Button btnAdd, btnDone;
     TextInputLayout nameEt, taskEt;
+
+    SwipeRefreshLayout swipeRefreshLayout;
 
     FirebaseModel firebaseModel;
     DetailAdapter detailAdapter;
@@ -49,28 +54,35 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnAdd = findViewById(R.id.add);
         btnAdd.setOnClickListener(this);
         firebaseModel = FirebaseModel.getInstance();
-
-//        detailList.clear();
-////        firebaseModel.getTaskData(MainActivity.this,detailList,detailAdapter);
-//        firebaseModel.getUserTask(MainActivity.this,detailList,detailAdapter);
-
+        todoList.clear();
+        firebaseModel.getTaskData(MainActivity.this,todoList);
+//        swipeToRefreshSetup();
     }
+//    private void swipeToRefreshSetup() {
+//        swipeRefreshLayout = findViewById(R.id.refreshLayout);
+//        swipeRefreshLayout.setOnRefreshListener(() -> {
+//            firebaseModel.getTaskData(MainActivity.this,detailList,detailAdapter);
+//            swipeRefreshLayout.setRefreshing(false);
+//        });
+//    }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        firebaseModel.getTaskData(MainActivity.this,detailList,detailAdapter);
-    }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.add:
-//                firebaseModel.getTaskData(MainActivity.this,detailList,detailAdapter);
                 showCustomDialog();
                 break;
         }
     }
+//    @Override
+//    public void updateUI(boolean complete) {
+//        if (complete) {
+//            detailAdapter.notifyDataSetChanged();
+//        } else {
+//            Toast.makeText(MainActivity.this, "Network Error", Toast.LENGTH_SHORT).show();
+//        }
+//    }
 
     //Function to display the custom dialog.
     void showCustomDialog() {
@@ -95,14 +107,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void initializeData() {
         // Initialize RecyclerView and set
 
-
-        detailList = new ArrayList<>();
+        todoList= new ArrayList<>();
         recyclerView = findViewById(R.id.todo_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        detailAdapter = new DetailAdapter(this, detailList);
+        detailAdapter = new DetailAdapter(this,todoList);
         recyclerView.setAdapter(detailAdapter);
-//        Toast.makeText(this, detailList.toString(), Toast.LENGTH_SHORT).show();
     }
 
 
@@ -111,26 +120,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         String task = taskEt.getEditText().getText().toString();
 
         if (name.length() >= 1 && task.length() >= 1) {
-
             firebaseModel.addTask(this, name, task);
-//            Toast.makeText(this, "Successfully Added", Toast.LENGTH_SHORT).show();
-
         } else {
             Toast.makeText(this, "Enter Valid Inputs", Toast.LENGTH_SHORT).show();
         }
     }
 
     public void updateUI(boolean isSuccess) {
+//        if (isSuccess) {
+//            Toast.makeText(MainActivity.this, "Successfully Added ", Toast.LENGTH_LONG).show();
+////            detailList.clear();
+////            detailAdapter.notifyDataSetChanged();
+//              firebaseModel.getTaskData(MainActivity.this,detailList,detailAdapter);
+//              detailAdapter.notifyDataSetChanged();
+//        } else {
+//            Toast.makeText(MainActivity.this, "Network error1", Toast.LENGTH_LONG).show();
+//        }
         if (isSuccess) {
-            Toast.makeText(MainActivity.this, "Successfully Added", Toast.LENGTH_LONG).show();
-//            detailList.clear();
-////            firebaseModel.getTaskData(MainActivity.this,detailList,detailAdapter);
-//            detailAdapter.notifyDataSetChanged();
-//            firebaseModel.getTaskData(MainActivity.this,detailList,detailAdapter);
-
+            detailAdapter.notifyDataSetChanged();
         } else {
-            Toast.makeText(MainActivity.this, "Network error1", Toast.LENGTH_LONG).show();
-
+            Toast.makeText(MainActivity.this, "Network Error", Toast.LENGTH_SHORT).show();
         }
 
     }

@@ -27,19 +27,20 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder> implements View.OnClickListener {
 
     private Context context;
-    private ArrayList<Detail> details;
+    private List<Detail> arrayOfTask;
     FirebaseModel firebaseModel;
-    Detail detail;
+
     DetailAdapter detailAdapter;
     MainActivity m;
 
-    public DetailAdapter(Context context, ArrayList<Detail> details) {
+    public DetailAdapter(Context context, List<Detail> arrayOfTask) {
         this.context = context;
-        this.details = details;
+        this.arrayOfTask = arrayOfTask;
     }
 
     @NonNull
@@ -52,7 +53,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-         detail = details.get(position);
+        Detail detail = arrayOfTask.get(position);
         holder.setDetails(detail);
 
 
@@ -68,20 +69,20 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
 
     @Override
     public int getItemCount() {
-        return details.size();
+        return arrayOfTask.size();
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.delete:
-                details.clear();
+                arrayOfTask.clear();
                 Toast.makeText(context, "clicked", Toast.LENGTH_SHORT).show();
-                firebaseModel.deleteTask(context.getApplicationContext(), detail.getId());
-                details.clear();
-                detailAdapter =new DetailAdapter(context.getApplicationContext(), details);
-
-                firebaseModel.getUserTask(context.getApplicationContext(),details,detailAdapter);
+//                firebaseModel.deleteTask(context.getApplicationContext(), detail.getId());
+//                details.clear();
+//                detailAdapter =new DetailAdapter(context.getApplicationContext(), details);
+//
+//                firebaseModel.getUserTask(context.getApplicationContext(),details,detailAdapter);
                 break;
             case R.id.edit:
 

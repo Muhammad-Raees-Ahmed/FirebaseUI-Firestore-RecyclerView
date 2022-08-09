@@ -2,6 +2,7 @@ package com.example.todoapp;
 
 import static android.content.ContentValues.TAG;
 import static com.example.todoapp.Model.immutable.COLLECTION_USER;
+import static com.example.todoapp.Model.immutable.COLLECTION_USER_CREATED_DATE;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,6 +26,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -55,6 +57,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnAdd.setOnClickListener(this);
         firebaseModel = FirebaseModel.getInstance();
         todoList.clear();
+
+
+
         firebaseModel.getTaskData(MainActivity.this,todoList);
 //        swipeToRefreshSetup();
     }
@@ -121,6 +126,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         if (name.length() >= 1 && task.length() >= 1) {
             firebaseModel.addTask(this, name, task);
+            firebaseModel.getTaskData(MainActivity.this,todoList);
         } else {
             Toast.makeText(this, "Enter Valid Inputs", Toast.LENGTH_SHORT).show();
         }

@@ -35,6 +35,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
     private List<Detail> arrayOfTask;
     FirebaseModel firebaseModel;
 
+    Detail detail;
     DetailAdapter detailAdapter;
     MainActivity m;
 
@@ -53,7 +54,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Detail detail = arrayOfTask.get(position);
+        detail = arrayOfTask.get(position);
         holder.setDetails(detail);
 
 
@@ -78,11 +79,8 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
             case R.id.delete:
                 arrayOfTask.clear();
                 Toast.makeText(context, "clicked", Toast.LENGTH_SHORT).show();
-//                firebaseModel.deleteTask(context.getApplicationContext(), detail.getId());
-//                details.clear();
-//                detailAdapter =new DetailAdapter(context.getApplicationContext(), details);
-//
-//                firebaseModel.getUserTask(context.getApplicationContext(),details,detailAdapter);
+                firebaseModel.deleteTask(context.getApplicationContext(), detail.getId());
+
                 break;
             case R.id.edit:
 

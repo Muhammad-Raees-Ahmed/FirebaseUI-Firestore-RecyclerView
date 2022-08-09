@@ -118,11 +118,13 @@ public class FirebaseModel {
                 .addOnCompleteListener(task ->{
                     if (task.isSuccessful()) {
                         detailList.clear();
+                        int num=0;
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             Log.d(TAG, document.getId() + " => " + document.getData());
+                          num+=1;
 //                                Toast.makeText(mainActivity, document.getData().toString(), Toast.LENGTH_SHORT).show();
-                            Detail obj = document.toObject(Detail.class);
-                            detailList.add(obj);
+                            Toast.makeText(context, Integer.toString(num), Toast.LENGTH_SHORT).show();
+                            detailList.add(document.toObject(Detail.class));
                         }
                         context.updateUI(true);
                     } else {

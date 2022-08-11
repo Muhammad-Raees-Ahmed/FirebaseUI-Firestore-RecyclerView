@@ -1,35 +1,20 @@
 package com.example.todoapp;
 
-import static android.content.ContentValues.TAG;
-import static com.example.todoapp.Model.immutable.COLLECTION_USER;
-import static com.example.todoapp.Model.immutable.COLLECTION_USER_CREATED_DATE;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
 import android.app.Dialog;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.Toast;
-
 import com.example.todoapp.Adapter.DetailAdapter;
 import com.example.todoapp.Model.Detail;
 import com.example.todoapp.Model.FirebaseModel;
-import com.example.todoapp.Model.My;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -79,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 showCustomDialog();
                 break;
         }
-//        la;\fl
+
     }
 //    @Override
 //    public void updateUI(boolean complete) {

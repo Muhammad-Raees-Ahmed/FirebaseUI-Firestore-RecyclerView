@@ -4,14 +4,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 
 import com.example.FirebaseUi.Model.User;
 import com.example.FirebaseUi.Adapter.UserAdapter;
 import com.example.FirebaseUi.R;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
@@ -19,7 +22,9 @@ import com.google.firebase.firestore.Query;
 public class MainActivity extends AppCompatActivity{
     //Declare Recyclerview , Adapter and ArrayList
 
-    Button btn;
+    Button btn, btnDone;
+    Dialog dialog;
+    TextInputLayout nameEt, fNameEt,ageET;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private CollectionReference userDetailRef = db.collection("user detail");
 
@@ -34,10 +39,32 @@ public class MainActivity extends AppCompatActivity{
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                showCustomDialog();
             }
         });
 
+    }
+
+    void showCustomDialog() {
+        dialog = new Dialog(MainActivity.this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(true);
+        dialog.setContentView(R.layout.add_dialog);
+
+        nameEt = dialog.findViewById(R.id.name);
+        fNameEt = dialog.findViewById(R.id.fName);
+        ageET= dialog.findViewById(R.id.age);
+        btnDone = dialog.findViewById(R.id.btn_done);
+
+
+        btnDone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                validateData();
+               dialog.dismiss();
+            }
+        });
+        dialog.show();
     }
 
     private void setUpRecyclerView() {

@@ -1,4 +1,4 @@
-package com.example.todoapp;
+package com.example.FirebaseUi;
 
 import android.content.Context;
 

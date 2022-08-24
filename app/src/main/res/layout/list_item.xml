@@ -6,7 +6,7 @@
     android:layout_marginEnd="8dp"
     android:layout_marginStart="8dp"
     android:layout_marginTop="8dp"
-    app:cardBackgroundColor="#FFFFE8">
+    app:cardBackgroundColor="#BBC0DC">
 
     <RelativeLayout
         android:layout_width="match_parent"

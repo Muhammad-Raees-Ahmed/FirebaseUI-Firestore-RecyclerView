@@ -81,10 +81,10 @@ public class MainActivity extends AppCompatActivity{
         if (name.length() >= 1 && fName.length() >= 1 && age.length()>=1) {
             nameEt.setEnabled(false);
             fNameEt.setEnabled(false);
-            ageET.setErrorEnabled(false);
+            ageET.setEnabled(false);
             btnDone.setEnabled(false);
             btnDone.setText("Plz wait...");
-//            Toast.makeText(this, "uri "+ uri.toString(), Toast.LENGTH_SHORT).show();
+
             firebaseModel.addUser(this,new User(name,fName,age));
         }
         if (name.equals("")) {
@@ -109,7 +109,11 @@ public class MainActivity extends AppCompatActivity{
     }
 
     private void setUpRecyclerView() {
+        // Compound query can run with writing indexes manually in firestore
         Query query = userDetailRef.orderBy("age", Query.Direction.DESCENDING);
+//                .whereEqualTo("age","21")
+//                .whereEqualTo("fName","Ashraf")
+//                .whereEqualTo("name","Raees");
 
         FirestoreRecyclerOptions<User> options = new FirestoreRecyclerOptions.Builder<User>()
                 .setQuery(query, User.class)

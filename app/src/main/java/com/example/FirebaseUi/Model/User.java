@@ -3,12 +3,12 @@ package com.example.FirebaseUi.Model;
 public class User {
     private String name;
     private String fName;
-    private int age;
+    private String age;
     public User() {
         //empty constructor needed
     }
 
-    public User(String name, String fName, int age) {
+    public User(String name, String fName, String age) {
         this.name = name;
         this.fName = fName;
         this.age = age;
@@ -22,7 +22,7 @@ public class User {
         return fName;
     }
 
-    public int getAge() {
+    public String getAge() {
         return age;
     }
 }

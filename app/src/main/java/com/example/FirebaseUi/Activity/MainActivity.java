@@ -5,11 +5,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.Toast;
 
+import com.example.FirebaseUi.Model.FirebaseModel;
 import com.example.FirebaseUi.Model.User;
 import com.example.FirebaseUi.Adapter.UserAdapter;
 import com.example.FirebaseUi.R;
@@ -25,6 +28,8 @@ public class MainActivity extends AppCompatActivity{
     Button btn, btnDone;
     Dialog dialog;
     TextInputLayout nameEt, fNameEt,ageET;
+    FirebaseModel firebaseModel;
+    User obj=new User();
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private CollectionReference userDetailRef = db.collection("user detail");
 
@@ -34,6 +39,7 @@ public class MainActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        firebaseModel = FirebaseModel.getInstance();
         setUpRecyclerView();
         btn=findViewById(R.id.add);
         btn.setOnClickListener(new View.OnClickListener() {
@@ -60,11 +66,46 @@ public class MainActivity extends AppCompatActivity{
         btnDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                validateData();
-               dialog.dismiss();
+                validateData();
             }
         });
         dialog.show();
+    }
+
+    private void validateData() {
+        String name = nameEt.getEditText().getText().toString();
+        String fName = fNameEt.getEditText().getText().toString();
+        String age = ageET.getEditText().getText().toString();
+
+
+        if (name.length() >= 1 && fName.length() >= 1 && age.length()>=1) {
+            nameEt.setEnabled(false);
+            fNameEt.setEnabled(false);
+            ageET.setErrorEnabled(false);
+            btnDone.setEnabled(false);
+            btnDone.setText("Plz wait...");
+//            Toast.makeText(this, "uri "+ uri.toString(), Toast.LENGTH_SHORT).show();
+            firebaseModel.addUser(this,new User(name,fName,age));
+        }
+        if (name.equals("")) {
+            nameEt.setErrorEnabled(true);
+            nameEt.setError("Required");
+
+        } else {
+            nameEt.setErrorEnabled(false);
+        }
+        if (fName.equals("")) {
+            fNameEt.setErrorEnabled(true);
+            fNameEt.setError("Required");
+        } else {
+            fNameEt.setErrorEnabled(false);
+        }
+        if (age.equals("")) {
+            ageET.setErrorEnabled(true);
+            ageET.setError("Required");
+        } else {
+            ageET.setErrorEnabled(false);
+        }
     }
 
     private void setUpRecyclerView() {
@@ -93,6 +134,15 @@ public class MainActivity extends AppCompatActivity{
         super.onStop();
         adapter.stopListening();
     }
+    public void updateUI(boolean isSuccess) {
+        if (isSuccess) {
+            dialog.dismiss();
+            Toast.makeText(this, "User successfully Added", Toast.LENGTH_SHORT).show();
+        }
+        else{
+            Toast.makeText(this, "Network Error", Toast.LENGTH_SHORT).show();
+        }
 
-
+    }
 }
+

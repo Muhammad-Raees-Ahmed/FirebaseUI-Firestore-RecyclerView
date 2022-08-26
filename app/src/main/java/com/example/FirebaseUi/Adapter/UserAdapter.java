@@ -23,6 +23,20 @@ public class UserAdapter  extends FirestoreRecyclerAdapter<User,UserHolder> {
         holder.textViewName.setText(model.getName());
         holder.textViewfName.setText(model.getfName());
         holder.textViewAge.setText(String.valueOf(model.getAge()));
+
+        // click on card view delete item
+//        holder.cardView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                deleteItem(holder.getAdapterPosition());
+//            }
+//        });
+        holder.cardView1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                deleteItem(holder.getAdapterPosition());
+            }
+        });
     }
 
     @NonNull

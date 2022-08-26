@@ -3,6 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Personal Android Projects/FirebaseUI-Firestore-RecyclerView/app/src/main/res/layout/add_dialog.xml" value="0.2" />
+        <entry key="..\:/Personal Android Projects/FirebaseUI-Firestore-RecyclerView/app/src/main/res/layout/list_item.xml" value="0.25" />
         <entry key="..\:/TodoApp/app/src/main/res/layout/activity_main.xml" value="0.20416666666666666" />
         <entry key="..\:/TodoApp/app/src/main/res/layout/add_todo_dialog.xml" value="0.20416666666666666" />
         <entry key="..\:/TodoApp/app/src/main/res/layout/item.xml" value="0.203125" />

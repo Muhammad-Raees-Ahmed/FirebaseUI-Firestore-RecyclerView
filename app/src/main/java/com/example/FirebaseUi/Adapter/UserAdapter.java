@@ -33,4 +33,8 @@ public class UserAdapter  extends FirestoreRecyclerAdapter<User,UserHolder> {
         return new UserHolder(v);
 
     }
+
+    public void deleteItem(int position) {
+        getSnapshots().getSnapshot(position).getReference().delete();
+    }
 }

@@ -1,2 +1,2 @@
 FirebaseUI Firestore RecyclerView
-Depricated
+1. Depricated
